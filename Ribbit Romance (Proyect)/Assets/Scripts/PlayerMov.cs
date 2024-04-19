@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,6 +9,7 @@ using UnityEngine.SocialPlatforms.GameCenter;
 
 public class PlayerMov : MonoBehaviour
 {
+    //Para poder asignar componentes de la rana y la trayectoria
     public GameObject frog;
     public LineRenderer lineRenderer;
     public Transform linePosition;
@@ -15,26 +17,45 @@ public class PlayerMov : MonoBehaviour
     public float baseForce;
 
 
-    public Vector3 currentPosition;
+    public Vector2 currentPosition;
 
     bool isMouseDown;
 
+    //Para obtener componentes de la rana
     Rigidbody2D frogRB;
     Collider2D frogCollider;
+    SpriteRenderer frogSprite;
 
+    //Variables para ajustar controles en Unity
     public float force;
+    public float minimoSalto;
+    public float maximoSalto;
+    public float maximoLínea;
+    Vector3 mouseClick;
 
-    // Start is called before the first frame update
     void Start()
     {
+        //Asignar componentes a variables
         frogRB = GetComponent<Rigidbody2D>();
         frogCollider = GetComponent<Collider2D>();
+        frogSprite = GetComponent<SpriteRenderer>();
         lineRenderer.positionCount = 2;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //Cambiar orientación de la rana
+        if (frogRB.velocity.x < -0.2)
+        {
+            frogSprite.flipX = false;
+        }
+        else if (frogRB.velocity.x > 0.2)
+        {
+            frogSprite.flipX = true;
+        }
+
+
+
         lineRenderer.SetPosition(0, frogRB.position);
 
         if (isMouseDown)
@@ -42,8 +63,9 @@ public class PlayerMov : MonoBehaviour
             Vector3 mousePosition = Input.mousePosition;
             mousePosition.z = 10;
 
-            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            SetLine(mousePosition);
+            currentPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            currentPosition = frogRB.position + Vector2.ClampMagnitude(currentPosition - frogRB.position, maximoLínea);
+            SetLine(currentPosition);
         }
         else
         {
@@ -57,8 +79,8 @@ public class PlayerMov : MonoBehaviour
     }
 
     void SetLine(Vector3 position)
-    {       
-                 
+    {
+
         lineRenderer.SetPosition(1, position);
 
     }
@@ -74,14 +96,24 @@ public class PlayerMov : MonoBehaviour
     }
 
     private void OnMouseDown()
-    {       
-        isMouseDown = true;        
+    {
+        mouseClick = Input.mousePosition;
+        isMouseDown = true;
+        
     }
 
     void Shoot(Vector3 position)
     {
-        Vector3 frogForce = (position - center.position) * force * -1;      
-        frogRB.velocity = frogForce;        
+        Vector3 frogForce = (position - center.position) * force * -1;
+
+        frogForce = limitesSalto(frogForce);
+        frogRB.velocity = frogForce;
     }
-    
+
+    Vector3 limitesSalto(Vector3 vector)
+    {
+        vector.y = Mathf.Clamp(vector.y, minimoSalto, maximoSalto);
+        vector.x = Mathf.Clamp(vector.x, minimoSalto, maximoSalto);
+        return vector;       
+    }
 }

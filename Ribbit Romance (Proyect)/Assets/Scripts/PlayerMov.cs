@@ -15,6 +15,7 @@ public class PlayerMov : MonoBehaviour
     public Transform linePosition;
     public Transform center;
     public float baseForce;
+    public float vectorDistance;
 
 
     public Vector2 currentPosition;
@@ -28,9 +29,12 @@ public class PlayerMov : MonoBehaviour
 
     //Variables para ajustar controles en Unity
     public float force;
-    public float minimoSalto;
-    public float maximoSalto;
-    public float maximoLínea;
+    public float minimoSaltoY;
+    public float maximoSaltoY;
+    public float minimoSaltoX;
+    public float maximoSaltoX;
+    public float maximoLinea;
+    public float minimoLinea;
     Vector3 mouseClick;
 
     void Start()
@@ -64,7 +68,7 @@ public class PlayerMov : MonoBehaviour
             mousePosition.z = 10;
 
             currentPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            currentPosition = frogRB.position + Vector2.ClampMagnitude(currentPosition - frogRB.position, maximoLínea);
+            currentPosition = frogRB.position + Vector2.ClampMagnitude(currentPosition - frogRB.position, maximoLinea);
             SetLine(currentPosition);
         }
         else
@@ -80,9 +84,10 @@ public class PlayerMov : MonoBehaviour
 
     void SetLine(Vector3 position)
     {
-
-        lineRenderer.SetPosition(1, position);
-
+        Vector2 direction = (frogRB.position - (Vector2)position).normalized;
+        vectorDistance = Vector3.Magnitude(Vector3.ClampMagnitude(((Vector2)position - frogRB.position), maximoLinea));
+        Vector2 lineEnd = (frogRB.position + direction * vectorDistance); // Puedes ajustar el valor "vectorDistance" para cambiar la longitud de la línea
+        lineRenderer.SetPosition(1, lineEnd);
     }
 
     private void OnMouseUp()
@@ -99,7 +104,7 @@ public class PlayerMov : MonoBehaviour
     {
         mouseClick = Input.mousePosition;
         isMouseDown = true;
-        
+
     }
 
     void Shoot(Vector3 position)
@@ -112,8 +117,18 @@ public class PlayerMov : MonoBehaviour
 
     Vector3 limitesSalto(Vector3 vector)
     {
-        vector.y = Mathf.Clamp(vector.y, minimoSalto, maximoSalto);
-        vector.x = Mathf.Clamp(vector.x, minimoSalto, maximoSalto);
-        return vector;       
+        vector.y = Mathf.Clamp(vector.y, minimoSaltoY, maximoSaltoY);
+        vector.x = Mathf.Clamp(vector.x, minimoSaltoX, maximoSaltoX);
+
+        return vector;
     }
+
+    Vector3 limitesLinea(Vector3 vector)
+    {
+        vector.y = Mathf.Clamp(vector.y, minimoLinea, maximoLinea);
+        vector.x = Mathf.Clamp(vector.x, minimoLinea, maximoLinea);
+        return vector;
+    }
+
+
 }

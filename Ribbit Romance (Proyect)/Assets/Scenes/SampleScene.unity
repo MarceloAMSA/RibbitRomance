@@ -1370,15 +1370,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8637453690503876159, guid: d4eed475e722629448c8c7656226246d, type: 3}
       propertyPath: force
-      value: 3.68
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637453690503876159, guid: d4eed475e722629448c8c7656226246d, type: 3}
+      propertyPath: maximoLinea
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 8637453690503876159, guid: d4eed475e722629448c8c7656226246d, type: 3}
       propertyPath: maximoSalto
-      value: 20
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637453690503876159, guid: d4eed475e722629448c8c7656226246d, type: 3}
+      propertyPath: minimoLinea
+      value: -4.5
       objectReference: {fileID: 0}
     - target: {fileID: 8637453690503876159, guid: d4eed475e722629448c8c7656226246d, type: 3}
       propertyPath: minimoSalto
-      value: -20
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 8637453690503876159, guid: d4eed475e722629448c8c7656226246d, type: 3}
       propertyPath: lineRenderer
@@ -1389,8 +1397,28 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8637453690503876159, guid: d4eed475e722629448c8c7656226246d, type: 3}
+      propertyPath: maximoSaltoX
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637453690503876159, guid: d4eed475e722629448c8c7656226246d, type: 3}
+      propertyPath: maximoSaltoY
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637453690503876159, guid: d4eed475e722629448c8c7656226246d, type: 3}
       propertyPath: "minimoL\xEDnea"
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637453690503876159, guid: d4eed475e722629448c8c7656226246d, type: 3}
+      propertyPath: minimoSaltoX
+      value: -14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637453690503876159, guid: d4eed475e722629448c8c7656226246d, type: 3}
+      propertyPath: minimoSaltoY
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637453690503876159, guid: d4eed475e722629448c8c7656226246d, type: 3}
+      propertyPath: vectorDistance
+      value: 4.99
       objectReference: {fileID: 0}
     - target: {fileID: 9015758378798488644, guid: d4eed475e722629448c8c7656226246d, type: 3}
       propertyPath: m_Radius

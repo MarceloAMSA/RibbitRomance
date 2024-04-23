@@ -36,7 +36,7 @@ public class moscas : MonoBehaviour
             contador.text = mosca + " / 8";
         }
 
-        if (collision.CompareTag("Trap"))
+        if (collision.CompareTag("Trap") & mosca > 0)
         {
             mosca--;
             Debug.Log(mosca);

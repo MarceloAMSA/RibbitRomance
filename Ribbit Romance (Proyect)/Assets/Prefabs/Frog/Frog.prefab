@@ -122,7 +122,7 @@ PrefabInstance:
       objectReference: {fileID: 3281488490360044493}
     - target: {fileID: 5188442838944010606, guid: 620a723c55218d44f84bc325bc3ba0e6, type: 3}
       propertyPath: m_Name
-      value: Player Variant Variant
+      value: Frog
       objectReference: {fileID: 0}
     - target: {fileID: 5500399375498546042, guid: 620a723c55218d44f84bc325bc3ba0e6, type: 3}
       propertyPath: m_StaticEditorFlags

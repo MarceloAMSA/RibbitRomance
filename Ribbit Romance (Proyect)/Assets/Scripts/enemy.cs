@@ -27,13 +27,13 @@ public class enemy : MonoBehaviour
     void Update()
     {
         Vector2 point = currentPoint.position - transform.position;
-        if(currentPoint == pointB.transform)
+        if (currentPoint == pointB.transform)
         {
             rb.velocity = new Vector2(speed, 0);
         }
         else
         {
-            rb.velocity = new Vector2 (-speed, 0);
+            rb.velocity = new Vector2(-speed, 0);
         }
 
         if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB.transform)
@@ -66,6 +66,6 @@ public class enemy : MonoBehaviour
     {
         Gizmos.DrawWireSphere(pointA.transform.position, 0.5f);
         Gizmos.DrawWireSphere(pointB.transform.position, 0.5f);
-        Gizmos.DrawLine(pointA.transform.position,pointB.transform.position);
+        Gizmos.DrawLine(pointA.transform.position, pointB.transform.position);
     }
 }

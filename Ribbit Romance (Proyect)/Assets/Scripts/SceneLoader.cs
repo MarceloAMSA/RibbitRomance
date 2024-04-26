@@ -17,7 +17,7 @@ public class SceneLoader : MonoBehaviour
 
     void ChangeScene1()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Carta");
     }
 
     void QuitGame()

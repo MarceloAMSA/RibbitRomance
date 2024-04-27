@@ -23,7 +23,6 @@ AnimationClip:
     - time: 0
       value: {fileID: 21300000, guid: 0dddac3418a23e54b907ccadf5da6f8a, type: 3}
     - time: 0.1
-<<<<<<< HEAD
       value: {fileID: 21300000, guid: 9ed421a080e48f643883fd3c45367889, type: 3}
     - time: 0.2
       value: {fileID: 21300000, guid: 1310e3faa6449b64293d6bef29559ff7, type: 3}
@@ -33,8 +32,6 @@ AnimationClip:
       value: {fileID: 21300000, guid: 1ba1a057f35066c49891957eee7b8479, type: 3}
     - time: 0.8
       value: {fileID: 21300000, guid: a4af0ab5ba6b3ca4f9b7a6caa15fd193, type: 3}
-=======
->>>>>>> parent of 5ce723b (Controles acuaticos, animaciones de agua casi listas)
       value: {fileID: 21300000, guid: c14ef2010fbe6054fa59cf26272e0546, type: 3}
     - time: 0.23333333
       value: {fileID: 21300000, guid: 90f00c2e5fe5d034fb7befc2b20b0d42, type: 3}

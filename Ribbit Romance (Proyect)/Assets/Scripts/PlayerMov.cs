@@ -32,7 +32,7 @@ public class PlayerMov : MonoBehaviour
         //Asignar componentes a variables, dos vertices en la línea
         frogRB = GetComponent<Rigidbody2D>();
         frogSprite = GetComponent<SpriteRenderer>();
-        lineRenderer.positionCount = 2;
+        lineRenderer.positionCount = 4;
     }
 
     void Update()
@@ -76,8 +76,12 @@ public class PlayerMov : MonoBehaviour
     {
         Vector2 direction = (frogRB.position - (Vector2)position).normalized;
         float vectorDistance = Vector3.Magnitude(Vector3.ClampMagnitude(((Vector2)position - frogRB.position), maximoLinea));
-        Vector2 lineEnd = (frogRB.position + direction * vectorDistance); // Puedes ajustar el valor "vectorDistance" para cambiar la longitud de la línea     
-        lineRenderer.SetPosition(1, lineEnd);
+        Vector2 lineEnd1 = (frogRB.position + direction * (vectorDistance * 0.899f)); // Puedes ajustar el valor "vectorDistance" para cambiar la longitud de la línea     
+        Vector2 lineEnd2 = (frogRB.position + direction * vectorDistance * 0.9f);
+        Vector2 lineEnd3 = (frogRB.position + direction * (vectorDistance * 1.2f));
+        lineRenderer.SetPosition(1, lineEnd1);
+        lineRenderer.SetPosition(2, lineEnd2);
+        lineRenderer.SetPosition(3, lineEnd3);
         camOffset = direction * vectorDistance * 0.5f;
     }
 
@@ -90,6 +94,9 @@ public class PlayerMov : MonoBehaviour
             mousePosition.z = 10;
             mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);          
             Shoot(mousePosition);
+
+            FindObjectOfType<AudioManager>().Play("Jump");
+
         }
         isMouseDown = false;
     }

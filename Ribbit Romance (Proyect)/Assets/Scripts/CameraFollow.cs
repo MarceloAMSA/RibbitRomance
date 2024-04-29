@@ -7,6 +7,7 @@ public class CameraFollow : MonoBehaviour
     public Vector3 offset;
     public float smoothTime;
     public Vector3 camVelocity;
+    public Vector3 minValues, maxValues;
   
 
     [SerializeField] private Transform target;
@@ -15,7 +16,12 @@ public class CameraFollow : MonoBehaviour
     void Update()
     {
         Vector3 targetPosition = target.position + offset + PlayerMov.camOffset;
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref camVelocity, smoothTime);
+        Vector3 boundPosition = new Vector3(
+            Mathf.Clamp(targetPosition.x, minValues.x, maxValues.x),
+            Mathf.Clamp(targetPosition.y, minValues.y, maxValues.y),
+            Mathf.Clamp(targetPosition.z, minValues.z, maxValues.z));
+
+        transform.position = Vector3.SmoothDamp(transform.position, boundPosition, ref camVelocity, smoothTime);
 
     }
 

@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerAnimWater : MonoBehaviour
 {
     private Animator anim;
     private Rigidbody2D frogRB;
     public static bool groundCollision;
-    public float swimSpeedUp;
-    public float swimSpeedDown;
+
 
     //Ennumeración de condiciones para animaciones
     private enum MovementState { idle, swimUp, swimDown, damage };
@@ -27,28 +27,30 @@ public class PlayerAnimWater : MonoBehaviour
     void Update()
     {
         UpdateAnimation();
+        PlayerMovWater.SwimCheck = false;
+
+
     }
 
     private void UpdateAnimation()
     {
         // Condiciones del salto
 
-        if (frogRB.velocity.y > swimSpeedDown && frogRB.velocity.y < swimSpeedUp)
+        if (PlayerMovWater.SwimCheck == false)
         {
             state = MovementState.idle;
         }
-
-        else if (PlayerMovWater.SwimUpCheck == true)
+        else
+            if (frogRB.velocity.y > -0.2f)
+            {
+                state = MovementState.swimUp;
+            }
+            else
+            {
+                state = MovementState.swimDown;
+            }
         {
-            state = MovementState.swimUp;
         }
-        else if (PlayerMovWater.SwimDownCheck == true)
-        {
-            state = MovementState.swimDown;
-        }
-
-    
-
 
         anim.SetInteger("state", (int)state);
     }

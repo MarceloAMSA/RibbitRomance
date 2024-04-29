@@ -13,13 +13,13 @@ public class PlayerMovWater : MonoBehaviour
     public LineRenderer lineRenderer;
     Rigidbody2D frogRB;
     SpriteRenderer frogSprite;
+    Animator anim;
 
     //Variables del código
     bool isMouseDown;
     Vector3 lastVelocity;
     public static Vector3 camOffset;
-    public static bool SwimUpCheck;
-    public static bool SwimDownCheck;
+    public static bool SwimCheck;
 
 
     //Variables para ajustar controles en Unity
@@ -35,16 +35,15 @@ public class PlayerMovWater : MonoBehaviour
         //Asignar componentes a variables, dos vertices en la línea
         frogRB = GetComponent<Rigidbody2D>();
         frogSprite = GetComponent<SpriteRenderer>();
-        lineRenderer.positionCount = 2;
+        lineRenderer.positionCount = 4;
     }
 
     void Update()
     {
         //Variable para calcular rebotes
         lastVelocity = frogRB.velocity;
+    
 
-        SwimUpCheck = false;
-        SwimDownCheck = false;
 
 
 
@@ -55,6 +54,7 @@ public class PlayerMovWater : MonoBehaviour
         if (frogRB.velocity.x < -0.2)
         {
             frogSprite.flipX = true;
+    
         }
         else if (frogRB.velocity.x > 0.2)
         {
@@ -84,8 +84,13 @@ public class PlayerMovWater : MonoBehaviour
     {
         Vector2 direction = (frogRB.position - (Vector2)position).normalized;
         float vectorDistance = Vector3.Magnitude(Vector3.ClampMagnitude(((Vector2)position - frogRB.position), maximoLinea));
-        Vector2 lineEnd = (frogRB.position + direction * vectorDistance); // Puedes ajustar el valor "vectorDistance" para cambiar la longitud de la línea     
-        lineRenderer.SetPosition(1, lineEnd);
+
+        Vector2 lineEnd1 = (frogRB.position + direction * (vectorDistance * 0.899f)); // Puedes ajustar el valor "vectorDistance" para cambiar la longitud de la línea     
+        Vector2 lineEnd2 = (frogRB.position + direction * vectorDistance * 0.9f);
+        Vector2 lineEnd3 = (frogRB.position + direction * (vectorDistance * 1.2f));
+        lineRenderer.SetPosition(1, lineEnd1);
+        lineRenderer.SetPosition(2, lineEnd2);
+        lineRenderer.SetPosition(3, lineEnd3);
         camOffset = direction * vectorDistance * 0.5f;
     }
 
@@ -98,17 +103,12 @@ public class PlayerMovWater : MonoBehaviour
             mousePosition.z = 10;
             mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);          
             Shoot(mousePosition);
-            
-            if (frogRB.velocity.y >= 0.1f)
-            {
-                SwimUpCheck = true;
-            }
-            else if (frogRB.velocity.y < -0.1f)
-            {
-                SwimDownCheck = true;
-            }
+            SwimCheck = true;
+
+
         }
         isMouseDown = false;
+
     }
 
     //Activa variable cuando se presiona el mouse
@@ -120,11 +120,12 @@ public class PlayerMovWater : MonoBehaviour
     //Mecaniso de disparo
     void Shoot(Vector2 position)
     {
-        Vector3 frogForce = (position - frogRB.position) * force * -1;
+        Vector2 frogForce = (position - frogRB.position) * force * -1;
         frogForce = limitesSalto(frogForce);
-        frogRB.velocity = frogForce;
-
+        frogRB.velocity = frogRB.velocity + frogForce;
+        
     }
+
 
     //Límites de fuerza de salto
     Vector3 limitesSalto(Vector3 vector)

@@ -11,7 +11,7 @@ public class PlayerMov : MonoBehaviour
 {
     //Para obtener y asignar componentes de la rana
     public LineRenderer lineRenderer;
-    Rigidbody2D frogRB;
+    public static Rigidbody2D frogRB;
     SpriteRenderer frogSprite;
 
     //Variables del código
@@ -127,11 +127,14 @@ public class PlayerMov : MonoBehaviour
     //Calcula rebotes cuando se colisiona con paredes o techo
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        FindObjectOfType<AudioManager>().Play("Collision");
         if (WallCheck.wallCollision)
         {
             var speed = lastVelocity.magnitude;
             var dir = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
             frogRB.velocity = dir * speed*0.5f;
+
+            
         }
         
     }

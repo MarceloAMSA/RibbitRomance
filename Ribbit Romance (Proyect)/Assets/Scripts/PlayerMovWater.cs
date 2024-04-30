@@ -105,6 +105,8 @@ public class PlayerMovWater : MonoBehaviour
             Shoot(mousePosition);
             SwimCheck = true;
 
+            FindObjectOfType<AudioManager>().Play("Swim");
+
 
         }
         isMouseDown = false;
@@ -139,11 +141,14 @@ public class PlayerMovWater : MonoBehaviour
     //Calcula rebotes cuando se colisiona con paredes o techo
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        
         if (WallCheck.wallCollision)
         {
             var speed = lastVelocity.magnitude;
             var dir = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
             frogRB.velocity = dir * speed*0.5f;
+
+            
         }
         
     }

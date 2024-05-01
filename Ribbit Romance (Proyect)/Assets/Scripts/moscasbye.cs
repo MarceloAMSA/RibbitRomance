@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class moscasbye : MonoBehaviour
 {
-    public GameObject enemyPrefab;
     public GameObject moscaPrefab;
     public float spawnDelay = 2f;
     private Transform player;
@@ -18,6 +17,7 @@ public class moscasbye : MonoBehaviour
         {
             StartCoroutine(ByeMosca());
         }
+
     }
 
     IEnumerator ByeMosca()

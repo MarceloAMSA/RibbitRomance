@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemy : MonoBehaviour
+public class enemy2 : MonoBehaviour
 {
     public GameObject pointA;
     public GameObject pointB;
@@ -26,22 +26,20 @@ public class enemy : MonoBehaviour
         Vector2 point = currentPoint.position - transform.position;
         if (currentPoint == pointB.transform)
         {
-            rb.velocity = new Vector2(speed, 0);
+            rb.velocity = new Vector2(0 , speed);
         }
         else
         {
-            rb.velocity = new Vector2(-speed, 0);
+            rb.velocity = new Vector2(0, -speed);
         }
 
-        if (Vector2.Distance(transform.position, currentPoint.position) < 5f
-            && currentPoint == pointB.transform)
+        if (Vector2.Distance(transform.position, currentPoint.position) < 5f && currentPoint == pointB.transform)
         {
             flip();
             currentPoint = pointA.transform;
             speed = previousSpeed;
         }
-        if (Vector2.Distance(transform.position, currentPoint.position) < 5f
-            && currentPoint == pointA.transform)
+        if (Vector2.Distance(transform.position, currentPoint.position) < 5f && currentPoint == pointA.transform)
         {
             flip();
             currentPoint = pointB.transform;

@@ -15,7 +15,7 @@ public class PlayerMov : MonoBehaviour
     SpriteRenderer frogSprite;
 
     //Variables del código
-    bool isMouseDown;
+    private bool isMouseDown;
     Vector3 lastVelocity;
     public static Vector3 camOffset;
 
@@ -128,6 +128,7 @@ public class PlayerMov : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         FindObjectOfType<AudioManager>().Play("Collision");
+
         if (WallCheck.wallCollision)
         {
             var speed = lastVelocity.magnitude;

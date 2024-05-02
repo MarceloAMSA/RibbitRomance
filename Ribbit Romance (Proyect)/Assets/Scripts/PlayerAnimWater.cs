@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static Unity.VisualScripting.Member;
 
 public class PlayerAnimWater : MonoBehaviour
 {
     private Animator anim;
     private Rigidbody2D frogRB;
     public static bool groundCollision;
+
+    public float pushbackForce;
+
 
 
     //Ennumeración de condiciones para animaciones
@@ -28,6 +32,7 @@ public class PlayerAnimWater : MonoBehaviour
     {
         UpdateAnimation();
         PlayerMovWater.SwimCheck = false;
+        MoscasNivel2.damageCheck = false;
 
 
     }
@@ -36,12 +41,13 @@ public class PlayerAnimWater : MonoBehaviour
     {
         // Condiciones del salto
 
+        
+
         if (PlayerMovWater.SwimCheck == false)
         {
             state = MovementState.idle;
         }
-        else
-            if (frogRB.velocity.y > -0.2f)
+        else if (frogRB.velocity.y > -0.2f)
             {
                 state = MovementState.swimUp;
             }
@@ -49,14 +55,24 @@ public class PlayerAnimWater : MonoBehaviour
             {
                 state = MovementState.swimDown;
             }
+        
+        if (MoscasNivel2.damageCheck == true)
         {
+            state = MovementState.damage;
+            Pushback(MoscasNivel2.damageSource);
+            FindObjectOfType<AudioManager>().Play("Damage");
         }
+        
 
         anim.SetInteger("state", (int)state);
     }
 
 
+    void Pushback(Vector2 position)
+    {
+        Vector2 direction = (frogRB.position - (Vector2)position).normalized;
+        frogRB.velocity = direction * pushbackForce;
 
-    
+    }
 
 }

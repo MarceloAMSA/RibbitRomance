@@ -9,6 +9,7 @@ TagManager:
   - Ramo
   - moscas
   - Top
+  - Cave
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - UI
   - Invisible Walls
   - Terrain
-  - 
+  - Moscas
   - 
   - 
   - 

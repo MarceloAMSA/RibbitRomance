@@ -45,7 +45,7 @@ public class PlayerAnimGround : MonoBehaviour
         {
             state = MovementState.falling;
         }
-        else if (frogRB.velocity.y == 0f)
+        else
         {
             state = MovementState.landing;
         }

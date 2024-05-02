@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemy : MonoBehaviour
+public class enemyFlipped : MonoBehaviour
 {
     public GameObject pointA;
     public GameObject pointB;
@@ -17,34 +17,35 @@ public class enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        currentPoint = pointB.transform;
+        currentPoint = pointA.transform;
         previousSpeed = speed;
+        flip();
     }
 
     void Update()
     {
         Vector2 point = currentPoint.position - transform.position;
-        if (currentPoint.position.x == pointB.transform.position.x)
-        {
-            rb.velocity = new Vector2(speed, 0);
-        }
-        else
+        if (currentPoint.position.x == pointA.transform.position.x)
         {
             rb.velocity = new Vector2(-speed, 0);
         }
-
-        if (Vector2.Distance(transform.position, currentPoint.position) < 5f 
-            && currentPoint == pointB.transform)
+        else
         {
-            flip();
-            currentPoint = pointA.transform;
-            speed = previousSpeed;
+            rb.velocity = new Vector2(speed, 0);
         }
+
         if (Vector2.Distance(transform.position, currentPoint.position) < 5f
             && currentPoint == pointA.transform)
         {
             flip();
             currentPoint = pointB.transform;
+            speed = previousSpeed;
+        }
+        if (Vector2.Distance(transform.position, currentPoint.position) < 5f
+            && currentPoint == pointB.transform)
+        {
+            flip();
+            currentPoint = pointA.transform;
             speed = previousSpeed;
         }
 

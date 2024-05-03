@@ -9,8 +9,7 @@ using Unity.VisualScripting;
 
 public class MoscasNivel1 : MonoBehaviour
 {
-    public GameObject Pond;
-    public GameObject Ramo;
+
     private Rigidbody2D flyHitbox;
 
     private int countRamo = 0;
@@ -29,28 +28,21 @@ public class MoscasNivel1 : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-            if (collision.CompareTag("moscas"))
+        if (collision.CompareTag("moscas"))
+        {
+            Destroy(collision.gameObject);
+
+            moscas.moscasTotales += 1;
+
+
+            if (moscas.moscasTotales == 8)
             {
-                Destroy(collision.gameObject);
-
-                moscas.moscasTotales += 1;
-
-
-                if (moscas.moscasTotales == 8)
-                {
-                    FindObjectOfType<AudioManager>().Play("FlyComplete");
-                }
-                else
-                {
-                    FindObjectOfType<AudioManager>().Play("FlyCollect");
-                }
-
-                contador.text = moscas.moscasTotales + " / 8";
-
-                Debug.Log(moscas.moscasTotales);
-
+                FindObjectOfType<AudioManager>().Play("FlyComplete");
             }
-
+            else
+            {
+                FindObjectOfType<AudioManager>().Play("FlyCollect");
+            }
 
             if (moscas.moscasTotales == 4 & countText == 0)
             {
@@ -59,37 +51,46 @@ public class MoscasNivel1 : MonoBehaviour
                 StartCoroutine(QuitarTexto(4));
             }
 
+            contador.text = moscas.moscasTotales + " / 8";
 
-            if (collision.gameObject.CompareTag("Ramo"))
+            Debug.Log(moscas.moscasTotales);
+        }
+
+      
+        else if (collision.CompareTag("Ramo"))
+        {
+            Destroy(collision.gameObject);
+            countRamo = 1;
+            Debug.Log(countRamo);
+            MoscaText.enabled = true;
+            MoscaText.text = "¡Un ramo es el regalo perfecto!";
+            StartCoroutine(QuitarTexto(4));
+        }
+
+
+        else if (collision.CompareTag("Pond"))
+        {
+            if (countRamo == 1 && moscas.moscasTotales >= 4)
             {
-                countRamo = 1;
-                Debug.Log(countRamo);
-                Destroy(collision.gameObject);
-                MoscaText.enabled = true;
-                MoscaText.text = "¡Un ramo es el regalo perfecto!";
-                StartCoroutine(QuitarTexto(4));
-
-            }
-
-
-            if (collision.CompareTag("Pond") && countRamo == 1 && moscas.moscasTotales >= 4)
-            {
+                FindObjectOfType<AudioManager>().Stop("Lvl1 Theme");
                 SceneManager.LoadScene("BetweenCutscene");
             }
 
-            else if (collision.CompareTag("Pond") && countRamo == 0 && moscas.moscasTotales >= 4)
+            else if (countRamo == 0 && moscas.moscasTotales >= 4)
             {
                 EndText.enabled = true;
                 EndText.text = "¡Un ramo es el regalo perfecto!";
                 StartCoroutine(QuitarTexto(5));
             }
-            else if (collision.CompareTag("Pond") && countRamo == 1 && moscas.moscasTotales < 4)
+
+            else if (countRamo == 1 && moscas.moscasTotales < 4)
             {
                 EndText.enabled = true;
                 EndText.text = "Necesito más moscas";
                 StartCoroutine(QuitarTexto(5));
             }
-            else if (collision.CompareTag("Pond") && countRamo == 0 && moscas.moscasTotales < 4)
+
+            else if (countRamo == 0 && moscas.moscasTotales < 4)
             {
                 EndText.enabled = true;
                 EndText.text = "Necesito más moscas";
@@ -97,11 +98,14 @@ public class MoscasNivel1 : MonoBehaviour
             }
         }
 
-        IEnumerator
-            QuitarTexto(int segundos)
-        {
-            yield return new WaitForSeconds(segundos);
-            MoscaText.enabled = false;
-            countText = 1;
-        }
+
     }
+
+    IEnumerator
+    QuitarTexto(int segundos)
+    {
+        yield return new WaitForSeconds(segundos);
+        MoscaText.enabled = false;
+        countText = 1;
+    }
+}

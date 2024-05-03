@@ -16,5 +16,6 @@ public class CambioDeEscenaDespuesDeVideo : MonoBehaviour
     private void CambiarEscena(VideoPlayer vp)
     {
         SceneManager.LoadScene("Level1");
+        FindObjectOfType<AudioManager>().Play("Lvl1 Theme");
     }
 }

@@ -16,5 +16,6 @@ public class inbetweentolvl2 : MonoBehaviour
     private void CambiarEscena(VideoPlayer vp)
     {
         SceneManager.LoadScene("Level2");
+        FindObjectOfType<AudioManager>().Play("Lvl2 Theme");
     }
 }

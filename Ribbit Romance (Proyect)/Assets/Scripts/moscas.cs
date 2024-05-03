@@ -3,5 +3,5 @@ using System.Collections;
 
 public class moscas : MonoBehaviour
 {
-    public static int moscasTotales = 8;
+    public static int moscasTotales = 0;
 }

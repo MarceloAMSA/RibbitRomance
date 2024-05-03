@@ -13,11 +13,14 @@ public class SceneLoader : MonoBehaviour
     {
         Startbutton.onClick.AddListener(ChangeScene1);
         Quitbutton.onClick.AddListener(QuitGame);
+        FindObjectOfType<AudioManager>().Play("Main Menu Theme");
     }
 
     void ChangeScene1()
     {
+        FindObjectOfType<AudioManager>().Stop("Main Menu Theme");
         SceneManager.LoadScene("Carta");
+        
     }
 
     void QuitGame()
@@ -25,4 +28,5 @@ public class SceneLoader : MonoBehaviour
         Application.Quit();
         Debug.Log("Quit!");
     }
+
 }

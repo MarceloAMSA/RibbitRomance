@@ -14,12 +14,13 @@ public class MoscasNivel2 : MonoBehaviour
     public static bool damageCheck;
     public static Vector3 damageSource;
     private float dmgTimer = 1.5f;
+    private Collider2D frogCollider;
 
     public GameObject moscaPrefab;
     public float spawnDelay;
 
     private Animator anim;
-    private int moscasnivel1 = moscas.moscasTotales;
+    private int moscasnivel1;
 
     [SerializeField] private TMP_Text contador;
     [SerializeField] private TMP_Text MoscaText;
@@ -27,7 +28,9 @@ public class MoscasNivel2 : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
+        frogCollider = GetComponent<Collider2D>();
         MoscaText.enabled = false;
+        moscasnivel1 = moscas.moscasTotales;
         contador.text = moscasnivel1 + " / 8";
     }
 
@@ -57,7 +60,17 @@ public class MoscasNivel2 : MonoBehaviour
                     Debug.Log(moscasnivel1);
                     contador.text = moscasnivel1 + " / 8";
                     StartCoroutine(ByeMosca());
-                    FindObjectOfType<AudioManager>().Play("BubbleSpawn");
+
+                    if (moscasnivel1 == 0)
+                    {
+                        FindObjectOfType<AudioManager>().Play("FlyEmpty");
+                    }
+                    else
+                    {
+                        FindObjectOfType<AudioManager>().Play("BubbleSpawn");
+                    }
+
+
                 }
             }
             if (moscasnivel1 == 3)
@@ -65,22 +78,27 @@ public class MoscasNivel2 : MonoBehaviour
                 MoscaText.enabled = true;
                 MoscaText.text = "oh no tengo muy pocas moscas :(";
                 StartCoroutine(QuitarTexto(3));
+                FindObjectOfType<AudioManager>().Play("FlyEmpty");
 
             }
+        }
+    
 
-            if (collision.CompareTag("Cave") && moscasnivel1 >= 4)
-            {
+        if (collision.CompareTag("Cave") && moscasnivel1 >= 4)
+            {              
                 SceneManager.LoadScene("EndingGood"); ;
+                FindObjectOfType<AudioManager>().Stop("Lvl2 Theme");
             }
 
-            else if (collision.CompareTag("Cave") && moscasnivel1 < 4)
+        else if (collision.CompareTag("Cave") && moscasnivel1 < 4)
             {
                 SceneManager.LoadScene("EndingBad"); ;
+                FindObjectOfType<AudioManager>().Stop("Lvl2 Theme");
             }
         }
 
 
-    }
+    
     IEnumerator
         QuitarTexto(int segundos)
     {

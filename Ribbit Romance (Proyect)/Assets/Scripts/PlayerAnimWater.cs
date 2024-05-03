@@ -16,6 +16,7 @@ public class PlayerAnimWater : MonoBehaviour
 
 
 
+
     //Ennumeración de condiciones para animaciones
     private enum MovementState { idle, swimUp, swimDown, damage };
     private MovementState state = MovementState.idle;
@@ -33,8 +34,6 @@ public class PlayerAnimWater : MonoBehaviour
         UpdateAnimation();
         PlayerMovWater.SwimCheck = false;
         MoscasNivel2.damageCheck = false;
-
-
     }
 
     private void UpdateAnimation()

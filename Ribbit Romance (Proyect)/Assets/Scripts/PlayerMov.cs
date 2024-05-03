@@ -33,6 +33,7 @@ public class PlayerMov : MonoBehaviour
         frogRB = GetComponent<Rigidbody2D>();
         frogSprite = GetComponent<SpriteRenderer>();
         lineRenderer.positionCount = 4;
+
     }
 
     void Update()

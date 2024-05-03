@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using System;
 
 
 public class MoscasNivel1 : MonoBehaviour
@@ -18,11 +19,16 @@ public class MoscasNivel1 : MonoBehaviour
     [SerializeField] private TMP_Text EndText;
     [SerializeField] private TMP_Text contador;
     [SerializeField] private TMP_Text MoscaText;
+    public Image dialogueBox;
+    public Image dialogueSprite;
+    public Animator transition;
 
     private void Start()
     {
         MoscaText.enabled = false;
         EndText.enabled = false;
+        dialogueBox.enabled = false;
+        dialogueSprite.enabled = false;
         contador.text = moscas.moscasTotales + " / 8";
     }
 
@@ -44,10 +50,21 @@ public class MoscasNivel1 : MonoBehaviour
                 FindObjectOfType<AudioManager>().Play("FlyCollect");
             }
 
-            if (moscas.moscasTotales == 4 & countText == 0)
+            if (moscas.moscasTotales == 4)
             {
+                dialogueBox.enabled = true;
+                dialogueSprite.enabled = true;
                 MoscaText.enabled = true;
-                MoscaText.text = "Con esto debería ser suficiente";
+                MoscaText.text = "Con esto será suficiente," + Environment.NewLine + "tal vez...";
+                StartCoroutine(QuitarTexto(4));
+            }
+
+            if (moscas.moscasTotales == 8)
+            {
+                dialogueBox.enabled = true;
+                dialogueSprite.enabled = true;
+                MoscaText.enabled = true;
+                MoscaText.text = "Ahora sí, que no digan" + Environment.NewLine + "que no resuelvo.";
                 StartCoroutine(QuitarTexto(4));
             }
 
@@ -63,7 +80,9 @@ public class MoscasNivel1 : MonoBehaviour
             countRamo = 1;
             Debug.Log(countRamo);
             MoscaText.enabled = true;
-            MoscaText.text = "¡Un ramo es el regalo perfecto!";
+            dialogueBox.enabled = true;
+            dialogueSprite.enabled = true;
+            MoscaText.text = "¡Este ramo seguro le saca" + Environment.NewLine + "una sonrisa!";
             StartCoroutine(QuitarTexto(4));
         }
 
@@ -72,28 +91,33 @@ public class MoscasNivel1 : MonoBehaviour
         {
             if (countRamo == 1 && moscas.moscasTotales >= 4)
             {
-                FindObjectOfType<AudioManager>().Stop("Lvl1 Theme");
-                SceneManager.LoadScene("BetweenCutscene");
+                StartCoroutine(SceneTransition(1));         
             }
 
             else if (countRamo == 0 && moscas.moscasTotales >= 4)
             {
-                EndText.enabled = true;
-                EndText.text = "¡Un ramo es el regalo perfecto!";
+                MoscaText.enabled = true;
+                dialogueBox.enabled = true;
+                dialogueSprite.enabled = true;
+                MoscaText.text = "Creo que ese ramo le gustaría mucho...";
                 StartCoroutine(QuitarTexto(5));
             }
 
             else if (countRamo == 1 && moscas.moscasTotales < 4)
             {
-                EndText.enabled = true;
-                EndText.text = "Necesito más moscas";
+                MoscaText.enabled = true;
+                dialogueBox.enabled = true;
+                dialogueSprite.enabled = true;
+                MoscaText.text = "¡Necesito más moscas antes de irme!";
                 StartCoroutine(QuitarTexto(5));
             }
 
             else if (countRamo == 0 && moscas.moscasTotales < 4)
             {
-                EndText.enabled = true;
-                EndText.text = "Necesito más moscas";
+                MoscaText.enabled = true;
+                dialogueBox.enabled = true;
+                dialogueSprite.enabled = true;
+                MoscaText.text = "¡Necesito más moscas antes de irme!";
                 StartCoroutine(QuitarTexto(5));
             }
         }
@@ -105,7 +129,19 @@ public class MoscasNivel1 : MonoBehaviour
     QuitarTexto(int segundos)
     {
         yield return new WaitForSeconds(segundos);
+        dialogueBox.enabled = false;
+        dialogueSprite.enabled = false;
+        EndText.enabled = false;
         MoscaText.enabled = false;
-        countText = 1;
+    }
+
+    IEnumerator
+    SceneTransition(int segundos)
+    {
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(segundos);
+        FindObjectOfType<AudioManager>().Stop("Lvl1 Theme");
+        SceneManager.LoadScene("BetweenCutscene");
+
     }
 }

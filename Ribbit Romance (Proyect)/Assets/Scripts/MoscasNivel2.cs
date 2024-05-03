@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 
 public class MoscasNivel2 : MonoBehaviour
@@ -19,7 +20,9 @@ public class MoscasNivel2 : MonoBehaviour
     public GameObject moscaPrefab;
     public float spawnDelay;
 
-    private Animator anim;
+    public Animator transition;
+    public Image dialogueBox;
+    public Image dialogueSprite;
     private int moscasnivel1;
 
     [SerializeField] private TMP_Text contador;
@@ -27,11 +30,16 @@ public class MoscasNivel2 : MonoBehaviour
 
     private void Start()
     {
-        anim = GetComponent<Animator>();
         frogCollider = GetComponent<Collider2D>();
-        MoscaText.enabled = false;
         moscasnivel1 = moscas.moscasTotales;
         contador.text = moscasnivel1 + " / 8";
+        MoscaText.enabled = false;
+        dialogueBox.enabled = false;
+        dialogueSprite.enabled = false;
+
+        StartCoroutine(Advertencia(2));
+
+
     }
 
     private void Update()
@@ -44,7 +52,6 @@ public class MoscasNivel2 : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        MoscaText.enabled = false;
 
         if (collision.CompareTag("Trap"))
         {
@@ -64,6 +71,11 @@ public class MoscasNivel2 : MonoBehaviour
                     if (moscasnivel1 == 0)
                     {
                         FindObjectOfType<AudioManager>().Play("FlyEmpty");
+                        dialogueBox.enabled = true;
+                        dialogueSprite.enabled = true;
+                        MoscaText.enabled = true;
+                        MoscaText.text = "Ya valió.";
+                        StartCoroutine(QuitarTexto(5));
                     }
                     else
                     {
@@ -72,28 +84,19 @@ public class MoscasNivel2 : MonoBehaviour
 
 
                 }
-            }
-            if (moscasnivel1 == 3)
-            {
-                MoscaText.enabled = true;
-                MoscaText.text = "oh no tengo muy pocas moscas :(";
-                StartCoroutine(QuitarTexto(3));
-                FindObjectOfType<AudioManager>().Play("FlyEmpty");
 
             }
         }
     
 
-        if (collision.CompareTag("Cave") && moscasnivel1 >= 4)
-            {              
-                SceneManager.LoadScene("EndingGood"); ;
-                FindObjectOfType<AudioManager>().Stop("Lvl2 Theme");
+        if (collision.CompareTag("Cave") && moscasnivel1 >= 1)
+            {
+                StartCoroutine(SceneTransitionGood(1));    
             }
 
-        else if (collision.CompareTag("Cave") && moscasnivel1 < 4)
+        else if (collision.CompareTag("Cave") && moscasnivel1 < 1)
             {
-                SceneManager.LoadScene("EndingBad"); ;
-                FindObjectOfType<AudioManager>().Stop("Lvl2 Theme");
+                StartCoroutine(SceneTransitionBad(1));
             }
         }
 
@@ -104,6 +107,9 @@ public class MoscasNivel2 : MonoBehaviour
     {
         yield return new WaitForSeconds(segundos);
         MoscaText.enabled = false;
+        dialogueBox.enabled = false;
+        dialogueSprite.enabled = false;
+
     }
 
     IEnumerator ByeMosca()
@@ -111,5 +117,29 @@ public class MoscasNivel2 : MonoBehaviour
         yield return new WaitForSeconds(spawnDelay / 2f);
         Instantiate(moscaPrefab, player.position, Quaternion.identity);
     }
+    IEnumerator SceneTransitionGood(int segundos)
+    {
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(segundos);
+        FindObjectOfType<AudioManager>().Stop("Lvl2 Theme");
+        SceneManager.LoadScene("EndingGood");
 
+    }
+    IEnumerator SceneTransitionBad(int segundos)
+    {
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(segundos);
+        FindObjectOfType<AudioManager>().Stop("Lvl2 Theme");
+        SceneManager.LoadScene("EndingBad");
+
+    }
+    IEnumerator Advertencia(int segundos)
+    {
+        yield return new WaitForSeconds(segundos);
+        dialogueBox.enabled = true;
+        dialogueSprite.enabled = true;
+        MoscaText.enabled = true;
+        MoscaText.text = "Debo tener cuidado o podría" + Environment.NewLine + "perder la cena.";
+        StartCoroutine(QuitarTexto(5));
+    }
 }

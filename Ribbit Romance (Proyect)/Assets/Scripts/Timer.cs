@@ -9,12 +9,11 @@ public class Timer : MonoBehaviour
 
     [SerializeField] TMPro.TextMeshProUGUI timerText;
     [SerializeField] float remainingTime;
-    public GameObject TryAgain;
+    public Animator transition;
 
 
     void Start()
     {
-        TryAgain.SetActive(false);
         FindObjectOfType<AudioManager>().Mute("Clock");
         FindObjectOfType<AudioManager>().Stop("Clock");
         FindObjectOfType<AudioManager>().Play("Clock");
@@ -51,23 +50,24 @@ public class Timer : MonoBehaviour
         if (remainingTime == 0)
         {
             FindObjectOfType<AudioManager>().Stop("Clock");
-            TryAgain.SetActive(true);
-            StartCoroutine(ReiniciarNivel(5));
+            
+            StartCoroutine(ReiniciarNivel(1));
         }
     }
     private void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        FindObjectOfType<AudioManager>().Play("Lvl2 Theme");
     }
 
 
     IEnumerator
         ReiniciarNivel(int segundos)
     {
+        transition.SetTrigger("Start");
         yield return new WaitForSeconds(segundos);
+        FindObjectOfType<AudioManager>().Stop("Lvl2 Theme");
         RestartLevel();
-
-
     }
 }
  

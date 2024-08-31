@@ -2,10 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.GameCenter;
+
 
 public class PlayerMov : MonoBehaviour
 {
@@ -55,9 +53,9 @@ public class PlayerMov : MonoBehaviour
 
         //Crea la línea de trayectoria
         if (isMouseDown && GroundCheck.isGrounded)
-        {       
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);           
-            SetLine(mousePosition);           
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            SetLine(mousePosition);
         }
         else
         {
@@ -92,7 +90,7 @@ public class PlayerMov : MonoBehaviour
         {
             Vector3 mousePosition = Input.mousePosition;
             mousePosition.z = 10;
-            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);          
+            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
             Shoot(mousePosition);
 
             FindObjectOfType<AudioManager>().Play("Jump");
@@ -133,10 +131,10 @@ public class PlayerMov : MonoBehaviour
         {
             var speed = lastVelocity.magnitude;
             var dir = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
-            frogRB.velocity = dir * speed*0.5f;
+            frogRB.velocity = dir * speed * 0.5f;
 
-            
+
         }
-        
+
     }
 }

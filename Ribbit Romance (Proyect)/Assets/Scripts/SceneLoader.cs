@@ -19,6 +19,7 @@ public class SceneLoader : MonoBehaviour
     void ChangeScene1()
     {
         FindObjectOfType<AudioManager>().Stop("Main Menu Theme");
+        moscas.moscasTotales = 0;
         SceneManager.LoadScene("Carta");
         
     }

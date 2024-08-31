@@ -2,10 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.PackageManager.Requests;
+
 using UnityEngine;
-using UnityEngine.SocialPlatforms.GameCenter;
+
 
 public class PlayerMovWater : MonoBehaviour
 {
@@ -42,7 +41,7 @@ public class PlayerMovWater : MonoBehaviour
     {
         //Variable para calcular rebotes
         lastVelocity = frogRB.velocity;
-    
+
 
 
 
@@ -54,7 +53,7 @@ public class PlayerMovWater : MonoBehaviour
         if (frogRB.velocity.x < -0.2)
         {
             frogSprite.flipX = true;
-    
+
         }
         else if (frogRB.velocity.x > 0.2)
         {
@@ -63,9 +62,9 @@ public class PlayerMovWater : MonoBehaviour
 
         //Crea la línea de trayectoria
         if (isMouseDown)
-        {       
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);           
-            SetLine(mousePosition);           
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            SetLine(mousePosition);
         }
         else
         {
@@ -97,11 +96,11 @@ public class PlayerMovWater : MonoBehaviour
     //Activa el disparo cuando se libera el mouse
     private void OnMouseUp()
     {
-        
+
         {
             Vector3 mousePosition = Input.mousePosition;
             mousePosition.z = 10;
-            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);          
+            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
             Shoot(mousePosition);
             SwimCheck = true;
 
@@ -125,7 +124,7 @@ public class PlayerMovWater : MonoBehaviour
         Vector2 frogForce = (position - frogRB.position) * force * -1;
         frogForce = limitesSalto(frogForce);
         frogRB.velocity = frogRB.velocity + frogForce;
-        
+
     }
 
 
@@ -141,16 +140,16 @@ public class PlayerMovWater : MonoBehaviour
     //Calcula rebotes cuando se colisiona con paredes o techo
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+
         if (WallCheck.wallCollision)
         {
             var speed = lastVelocity.magnitude;
             var dir = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
-            frogRB.velocity = dir * speed*0.5f;
+            frogRB.velocity = dir * speed * 0.5f;
 
-            
+
         }
-        
+
     }
-   
+
 }

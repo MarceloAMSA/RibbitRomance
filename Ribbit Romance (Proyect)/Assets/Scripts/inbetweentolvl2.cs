@@ -5,14 +5,12 @@ using UnityEngine.Video;
 
 public class inbetweentolvl2 : MonoBehaviour
 {
-    private VideoPlayer video;
+    [SerializeField] string videoFileName;
     public Button skip;
 
-    private void Awake()
+    void Start()
     {
-        video = GetComponent<VideoPlayer>();
-        video.Play();
-        video.loopPointReached += CambiarEscena;
+        PlayVideo();
         skip.onClick.AddListener(Skip);
     }
 
@@ -26,5 +24,18 @@ public class inbetweentolvl2 : MonoBehaviour
     {
         SceneManager.LoadScene("Level2");
         FindObjectOfType<AudioManager>().Play("Lvl2 Theme");
+    }
+
+    public void PlayVideo()
+    {
+        VideoPlayer videoPlayer = GetComponent<VideoPlayer>();
+        if (videoPlayer)
+        {
+            string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, videoFileName);
+            Debug.Log(videoPath);
+            videoPlayer.url = videoPath;
+            videoPlayer.Play();
+            videoPlayer.loopPointReached += CambiarEscena;
+        }
     }
 }

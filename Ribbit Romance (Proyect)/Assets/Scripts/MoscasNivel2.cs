@@ -37,7 +37,7 @@ public class MoscasNivel2 : MonoBehaviour
         dialogueBox.enabled = false;
         dialogueSprite.enabled = false;
 
-        StartCoroutine(Advertencia(2));
+        StartCoroutine(Advertencia(4));
 
 
     }
@@ -122,6 +122,7 @@ public class MoscasNivel2 : MonoBehaviour
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(segundos);
         FindObjectOfType<AudioManager>().Stop("Lvl2 Theme");
+        FindObjectOfType<AudioManager>().Stop("Clock");
         SceneManager.LoadScene("EndingGood");
 
     }
@@ -130,6 +131,7 @@ public class MoscasNivel2 : MonoBehaviour
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(segundos);
         FindObjectOfType<AudioManager>().Stop("Lvl2 Theme");
+        FindObjectOfType<AudioManager>().Stop("Clock");
         SceneManager.LoadScene("EndingBad");
 
     }

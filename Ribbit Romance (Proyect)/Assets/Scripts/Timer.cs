@@ -14,9 +14,8 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
-        FindObjectOfType<AudioManager>().Mute("Clock");
-        FindObjectOfType<AudioManager>().Stop("Clock");
         FindObjectOfType<AudioManager>().Play("Clock");
+        FindObjectOfType<AudioManager>().Mute("Clock");
         remainingTime = 90;
     }
 

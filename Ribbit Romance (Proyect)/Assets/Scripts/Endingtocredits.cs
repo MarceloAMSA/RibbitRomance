@@ -5,27 +5,37 @@ using UnityEngine.Video;
 
 public class Endingtocredits : MonoBehaviour
 {
-    private VideoPlayer video;
+    [SerializeField] string videoFileName;
     public Button skip;
 
 
-    private void Awake()
+    void Start()
     {
-        video = GetComponent<VideoPlayer>();
-        video.Play();
-        video.loopPointReached += CambiarEscena;
+        PlayVideo();
         skip.onClick.AddListener(Skip);
     }
 
     private void CambiarEscena(VideoPlayer vp)
     {
         SceneManager.LoadScene("Credits");
-
     }
 
     void Skip()
     {
         SceneManager.LoadScene("Credits");
 
+    }
+
+    public void PlayVideo()
+    {
+        VideoPlayer videoPlayer = GetComponent<VideoPlayer>();
+        if (videoPlayer)
+        {
+            string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, videoFileName);
+            Debug.Log(videoPath);
+            videoPlayer.url = videoPath;
+            videoPlayer.Play();
+            videoPlayer.loopPointReached += CambiarEscena;
+        }
     }
 }

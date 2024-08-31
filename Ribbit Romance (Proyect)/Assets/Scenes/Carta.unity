@@ -182,8 +182,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Omitir
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c5e843f07a3de463ea3b33c18e919903, type: 2}
-  m_sharedMaterial: {fileID: -100498313849028125, guid: c5e843f07a3de463ea3b33c18e919903, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0151dfd28c66135488fda248c3b14d2f, type: 2}
+  m_sharedMaterial: {fileID: -3934871598398428789, guid: 0151dfd28c66135488fda248c3b14d2f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -646,7 +646,7 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
@@ -658,10 +658,10 @@ VideoPlayer:
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 00
   m_ControlledAudioTrackCount: 1
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_SkipOnDrop: 1
   m_Looping: 0
-  m_WaitForFirstFrame: 1
+  m_WaitForFirstFrame: 0
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
 --- !u!4 &1667713475
@@ -688,9 +688,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1667713473}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee472a79db7d1492e98f853a38e7f893, type: 3}
+  m_Script: {fileID: 11500000, guid: e7174cad38856d34b8ac2bbee575551d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  videoFileName: cartita cutscene.mp4
   skip: {fileID: 568665031}
 --- !u!1 &1913951068
 GameObject:
@@ -740,11 +741,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96

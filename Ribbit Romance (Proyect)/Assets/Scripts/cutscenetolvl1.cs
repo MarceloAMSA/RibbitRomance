@@ -3,18 +3,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Video;
-using static UnityEditor.ShaderData;
 
-public class CambioDeEscenaDespuesDeVideo : MonoBehaviour
+
+public class cutscenetolvl1 : MonoBehaviour
 {
-    private VideoPlayer video;
+    [SerializeField] string videoFileName;
     public Button skip;
 
-    private void Awake()
+
+
+    void Start()
     {
-        video = GetComponent<VideoPlayer>();
-        video.Play();
-        video.loopPointReached += CambiarEscena;
+        PlayVideo();
         skip.onClick.AddListener(Skip);
     }
 
@@ -29,4 +29,18 @@ public class CambioDeEscenaDespuesDeVideo : MonoBehaviour
         SceneManager.LoadScene("Level1");
         FindObjectOfType<AudioManager>().Play("Lvl1 Theme");
     }
+
+    public void PlayVideo()
+    {
+        VideoPlayer videoPlayer = GetComponent<VideoPlayer>();
+        if (videoPlayer) 
+        {
+            string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, videoFileName);
+            Debug.Log(videoPath);
+            videoPlayer.url = videoPath;
+            videoPlayer.Play();
+            videoPlayer.loopPointReached += CambiarEscena;
+        }
+    }
+
 }
